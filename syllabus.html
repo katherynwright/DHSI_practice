@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Humanities: Theory, Methods, and Practice - DH 101</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fafafa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .course-info-item {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+
+        nav {
+            background: #34495e;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .section h3 {
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .week-item {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .week-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .week-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .day-content {
+            margin-bottom: 0.5rem;
+        }
+
+        .day-title {
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        li {
+            margin-bottom: 0.3rem;
+        }
+
+        .assignment-item {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+        }
+
+        .assignment-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+
+        .grading-scale {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .grade-item {
+            background: #e9ecef;
+            padding: 0.5rem;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .policy-item {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .resource-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            border: 1px solid #dee2e6;
+        }
+
+        .resource-card h4 {
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        .bibliography-item {
+            background: #f5f5f5;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            border-radius: 3px;
+            border-left: 3px solid #6c757d;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .search-container {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .search-input {
+            padding: 0.7rem;
+            border: 2px solid #3498db;
+            border-radius: 25px;
+            width: 300px;
+            max-width: 100%;
+            font-size: 1rem;
+        }
+
+        .highlight {
+            background-color: yellow;
+            padding: 0.2rem;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 200px;
+            }
+            
+            .section {
+                padding: 1rem;
+            }
+        }
+
+        .print-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .print-btn:hover {
+            background: #218838;
+        }
+
+        @media print {
+            nav, .search-container, .print-btn {
+                display: none;
+            }
+            
+            .section {
+                display: block !important;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1>Digital Humanities: Theory, Methods, and Practice</h1>
+                <div class="course-info">
+                    <div class="course-info-item"><strong>Course Code:</strong> DH 101</div>
+                    <div class="course-info-item"><strong>Semester:</strong> Fall 2025</div>
+                    <div class="course-info-item"><strong>Credits:</strong> 3</div>
+                    <div class="course-info-item"><strong>Meeting Time:</strong> Tuesdays & Thursdays, 2:00-3:30 PM</div>
+                    <div class="course-info-item"><strong>Location:</strong> Digital Lab 204</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
+                <button class="nav-btn" onclick="showSection('schedule')">Schedule</button>
+                <button class="nav-btn" onclick="showSection('assignments')">Assignments</button>
+                <button class="nav-btn" onclick="showSection('policies')">Policies</button>
+                <button class="nav-btn" onclick="showSection('resources')">Resources</button>
+                <button class="nav-btn" onclick="showSection('bibliography')">Bibliography</button>
+                <button class="print-btn" onclick="window.print()">Print Syllabus</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search syllabus content..." oninput="searchContent(this.value)">
+            </div>
+
+            <section id="overview" class="section active">
+                <h2>Course Overview</h2>
+                
+                <h3>Instructor Information</h3>
+                <div class="week-item">
+                    <div><strong>Professor:</strong> [Your Name]</div>
+                    <div><strong>Email:</strong> [your.email@university.edu]</div>
+                    <div><strong>Office Hours:</strong> Wednesdays 1:00-3:00 PM or by appointment</div>
+                    <div><strong>Office:</strong> [Building & Room Number]</div>
+                </div>
+
+                <h3>Course Description</h3>
+                <p>This course introduces students to the interdisciplinary field of Digital Humanities (DH), exploring how digital technologies transform humanities research, teaching, and public engagement. Students will examine theoretical foundations, learn practical digital methods, and develop hands-on experience with DH tools and approaches.</p>
+
+                <h3>Learning Objectives</h3>
+                <p>By the end of this course, students will be able to:</p>
+                <ul>
+                    <li>Define digital humanities and understand its theoretical foundations</li>
+                    <li>Critically evaluate digital humanities projects and methodologies</li>
+                    <li>Apply basic digital tools for humanities research and analysis</li>
+                    <li>Create a small-scale digital humanities project</li>
+                    <li>Understand ethical considerations in digital scholarship</li>
+                    <li>Engage with debates about the future of humanities in the digital age</li>
+                </ul>
+
+                <h3>Required Texts and Materials</h3>
+                <ul>
+                    <li><strong>Primary Text:</strong> Moretti, Franco. <em>Distant Reading</em>. London: Verso, 2013.</li>
+                    <li><strong>Supplementary Readings:</strong> Available on course website</li>
+                    <li><strong>Tools:</strong> Access to computer lab; personal laptop recommended</li>
+                    <li><strong>Accounts:</strong> Students will create free accounts for various digital tools</li>
+                </ul>
+            </section>
+
+            <section id="schedule" class="section">
+                <h2>Course Schedule</h2>
+                
+                <div class="week-item">
+                    <div class="week-title">Week 1: Introduction to Digital Humanities</div>
+                    <div class="day-content">
+                        <div class="day-title">Tuesday: What is Digital Humanities?</div>
+                        <ul>
+                            <li>Hockey, Susan. "The History of Humanities Computing"</li>
+                            <li>Ramsay, Stephen. "On Building" (2011)</li>
+                        </ul>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-title">Thursday: DH Debates and Definitions</div>
+                        <ul>
+                            <li>Moretti, Franco. "Conjectures on World Literature"</li>
+                            <li>Schreibman, Siemens & Unsworth. "Digital Humanities: Definition"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-item">
+                    <div class="week-title">Week 2: Digital Archives and Collections</div>
+                    <div class="day-content">
+                        <div class="day-title">Tuesday: Building Digital Archives</div>
+                        <ul>
+                            <li>Owens, Trevor. "Digital Sources & Digital Archives"</li>
+                            <li>Case Study: The Walt Whitman Archive</li>
+                        </ul>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-title">Thursday: Metadata and Standards</div>
+                        <ul>
+                            <li>Dublin Core Tutorial</li>
+                            <li>Hands-on: Exploring digital collections</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-item">
+                    <div class="week-title">Week 3: Text Analysis and Distant Reading</div>
+                    <div class="day-content">
+                        <div class="day-title">Tuesday: Theory of Distant Reading</div>
+                        <ul>
+                            <li>Moretti, Franco. "Graphs, Maps, Trees" (excerpts)</li>
+                            <li>Underwood, Ted. "Seven Ways Humanists are Using Computers"</li>
+                        </ul>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-title">Thursday: Tools for Text Analysis</div>
+                        <ul>
+                            <li>Hands-on: Voyant Tools</li>
+                            <li>Introduction to corpus linguistics</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-item">
+                    <div class="week-title">Week 4: Data Visualization</div>
+                    <div class="day-content">
+                        <div class="day-title">Tuesday: Visualizing Humanities Data</div>
+                        <ul>
+                            <li>Drucker, Johanna. "Humanities Approaches to Graphical Display"</li>
+                            <li>Manovich, Lev. "What is Visualization?"</li>
+                        </ul>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-title">Thursday: Creating Visualizations</div>
+                        <ul>
+                            <li>Hands-on: Tableau Public</li>
+                            <li>Discussion: Interpretation vs. exploration</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-item">
+                    <div class="week-title">Week 5: Mapping and Spatial Humanities</div>
+                    <div class="day-content">
+                        <div class="day-title">Tuesday: Geographic Information Systems in DH</div>
+                        <ul>
+                            <li>Bodenhamer, David. "The Potential of Spatial Humanities"</li>
+                            <li>Case Study: Mapping the Republic of Letters</li>
+                        </ul>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-title">Thursday: Digital Mapping Workshop</div>
+                        <ul>
+                            <li>Hands-on: StoryMapJS or ArcGIS Online</li>
+                            <li>Planning spatial narratives</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-item">
+                    <div class="week-title">Week 6: Digital Storytelling and Exhibition</div>
+                    <div class="day-content">
+                        <div class="day-title">Tuesday: Omeka and Digital Exhibits</div>
+                        <ul>
+                            <li>Leon, Sharon. "Building, Hosting & Maintaining Digital Projects"</li>
+                            <li>Examples of digital exhibitions</li>
+                        </ul>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-title">Thursday: Workshop: Creating Digital Exhibits</div>
+                        <ul>
+                            <li>Hands-on: Omeka S</li>
+                            <li>Project planning session</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-item">
+                    <div class="week-title">Week 7: Network Analysis</div>
+                    <div class="day-content">
+                        <div class="day-title">Tuesday: Networks in Humanities Research</div>
+                        <ul>
+                            <li>Weingart, Scott. "Demystifying Networks"</li>
+                            <li>Ahnert, Ruth. "Protestant Letter Networks"</li>
+                        </ul>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-title">Thursday: Network Visualization Tools</div>
+                        <ul>
+                            <li>Hands-on: Gephi or Cytoscape</li>
+                            <li>Small group analysis exercises</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-item">
+                    <div class="week-title">Week 8: Digital Pedagogy</div>
+                    <div class="day-content">
+                        <div class="day-title">Tuesday: Teaching in Digital Environments</div>
+                        <ul>
+                            <li>Sample, Mark. "What's Wrong with Writing Essays?"</li>
+                            <li>Digital humanities in the classroom</li>
+                        </ul>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-title">Thursday: Student Project Presentations I</div>
+                        <ul>
+                            <li>Peer feedback and discussion</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-item">
+                    <div class="week-title">Week 9: Ethics and Sustainability</div>
+                    <div class="day-content">
+                        <div class="day-title">Tuesday: Ethical Considerations in DH</div>
+                        <ul>
+                            <li>Posner, Miriam. "What's Next: The Radical, Unrealized Potential of Digital Humanities"</li>
+                            <li>Indigenous protocols for cultural heritage</li>
+                        </ul>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-title">Thursday: Project Sustainability</div>
+                        <ul>
+                            <li>Nowviskie, Bethany. "Digital Humanities in the Anthropocene"</li>
+                            <li>Long-term preservation strategies</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="week-item">
+                    <div class="week-title">Week 10: Future Directions</div>
+                    <div class="day-content">
+                        <div class="day-title">Tuesday: AI and Machine Learning in DH</div>
+                        <ul>
+                            <li>Underwood, Ted. "Machine Learning and Human Perspective"</li>
+                            <li>Discussion: Opportunities and challenges</li>
+                        </ul>
+                    </div>
+                    <div class="day-content">
+                        <div class="day-title">Thursday: Student Project Presentations II</div>
+                        <ul>
+                            <li>Final presentations and course reflection</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="assignments" class="section">
+                <h2>Assignments and Assessment</h2>
+                
+                <h3>Major Assignments</h3>
+                
+                <div class="assignment-item">
+                    <div class="assignment-title">1. Digital Tool Review (20%) - Due Week 4</div>
+                    <p>1000-word critical review of a DH tool or platform</p>
+                </div>
+
+                <div class="assignment-item">
+                    <div class="assignment-title">2. Data Visualization Project (25%) - Due Week 6</div>
+                    <p>Create and analyze a data visualization with 750-word reflection</p>
+                </div>
+
+                <div class="assignment-item">
+                    <div class="assignment-title">3. Final Digital Project (35%) - Due Week 10</div>
+                    <p>Original DH project with 1500-word project statement</p>
+                    <p><strong>Options:</strong> digital exhibit, text analysis, mapping project, or network analysis</p>
+                </div>
+
+                <div class="assignment-item">
+                    <div class="assignment-title">4. Participation & Weekly Reflections (20%)</div>
+                    <p>Active participation in discussions and workshops</p>
+                    <p>Weekly 250-word reflection posts</p>
+                </div>
+
+                <h3>Grading Scale</h3>
+                <div class="grading-scale">
+                    <div class="grade-item">A: 93-100%</div>
+                    <div class="grade-item">A-: 90-92%</div>
+                    <div class="grade-item">B+: 87-89%</div>
+                    <div class="grade-item">B: 83-86%</div>
+                    <div class="grade-item">B-: 80-82%</div>
+                    <div class="grade-item">C+: 77-79%</div>
+                    <div class="grade-item">C: 73-76%</div>
+                    <div class="grade-item">C-: 70-72%</div>
+                    <div class="grade-item">D: 60-69%</div>
+                    <div class="grade-item">F: Below 60%</div>
+                </div>
+            </section>
+
+            <section id="policies" class="section">
+                <h2>Course Policies</h2>
+                
+                <div class="policy-item">
+                    <h3>Attendance</h3>
+                    <p>Regular attendance is essential. More than two unexcused absences may result in grade reduction.</p>
+                </div>
+
+                <div class="policy-item">
+                    <h3>Late Work</h3>
+                    <p>Late assignments will be penalized 5% per day unless prior arrangements are made.</p>
+                </div>
+
+                <div class="policy-item">
+                    <h3>Academic Integrity</h3>
+                    <p>All work must be original. Proper citation of sources is required. Collaboration is encouraged for workshops but individual reflection is expected.</p>
+                </div>
+
+                <div class="policy-item">
+                    <h3>Accessibility</h3>
+                    <p>This course is committed to providing equal access to all students. Please contact the instructor to discuss any accommodations needed.</p>
+                </div>
+
+                <div class="policy-item">
+                    <h3>Technology Policy</h3>
+                    <p>Laptops and tablets are encouraged for note-taking and hands-on work. Please use devices respectfully during class discussions.</p>
+                </div>
+            </section>
+
+            <section id="resources" class="section">
+                <h2>Resources</h2>
+                
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h4>Digital Humanities Centers and Organizations</h4>
+                        <ul>
+                            <li>Alliance of Digital Humanities Organizations (ADHO)</li>
+                            <li>Digital Humanities Quarterly</li>
+                            <li>Programming Historian tutorials</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Technical Support</h4>
+                        <ul>
+                            <li>Campus IT Help Desk</li>
+                            <li>Digital Scholarship Librarian: [contact info]</li>
+                            <li>Peer tutoring available</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Text Analysis Tools</h4>
+                        <ul>
+                            <li>Voyant Tools</li>
+                            <li>AntConc</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Visualization Tools</h4>
+                        <ul>
+                            <li>Tableau Public</li>
+                            <li>RAWGraphs</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Mapping Tools</h4>
+                        <ul>
+                            <li>StoryMapJS</li>
+                            <li>Google My Maps</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Web Publishing</h4>
+                        <ul>
+                            <li>GitHub Pages</li>
+                            <li>WordPress</li>
+                        </ul>
+                    </div>
+
+                    <div class="resource-card">
+                        <h4>Data Tools</h4>
+                        <ul>
+                            <li>OpenRefine</li>
+                            <li>Google Sheets</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="bibliography" class="section">
+                <h2>Bibliography</h2>
+                
+                <h3>Essential DH Scholarship</h3>
+                
+                <div class="bibliography-item">
+                    Berry, David M., ed. <em>Understanding Digital Humanities</em>. Palgrave Macmillan, 2012.
+                </div>
+
+                <div class="bibliography-item">
+                    Gold, Matthew K., ed. <em>Debates in the Digital Humanities</em>. University of Minnesota Press, 2012.
+                </div>
+
+                <div class="bibliography-item">
+                    Hockey, Susan. "The History of Humanities Computing: An Overview." <em>Digital Humanities Quarterly</em> 1.1 (2007).
+                </div>
+
+                <div class="bibliography-item">
+                    Moretti, Franco. <em>Distant Reading</em>. Verso, 2013.
+                </div>
+
+                <div class="bibliography-item">
+                    Ramsay, Stephen. <em>Reading Machines: Toward an Algorithmic Criticism</em>. University of Illinois Press, 2011.
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p><em>This syllabus is subject to change. Students will be notified of any modifications.</em></p>
+            <p><strong>Last Updated:</strong> May 29, 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all nav buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function searchContent(query) {
+            const sections = document.querySelectorAll('.section');
+            
+            // Remove existing highlights
+            sections.forEach(section => {
+                const highlightedElements = section.querySelectorAll('.highlight');
+                highlightedElements.forEach(el => {
+                    el.outerHTML = el.innerHTML;
+                });
+            });
+
+            if (query.trim() === '') {
+                return;
+            }
+
+            // Search and highlight
+            sections.forEach(section => {
+                const walker = document.createTreeWalker(
+                    section,
+                    NodeFilter.SHOW_TEXT,
+                    null,
+                    false
+                );
+
+                const textNodes = [];
+                let node;
+                while (node = walker.nextNode()) {
+                    textNodes.push(node);
+                }
+
+                textNodes.forEach(textNode => {
+                    const parent = textNode.parentNode;
+                    if (parent.tagName === 'SCRIPT' || parent.tagName === 'STYLE') {
+                        return;
+                    }
+
+                    const text = textNode.textContent;
+                    const regex = new RegExp(`(${query})`, 'gi');
+                    
+                    if (regex.test(text)) {
+                        const highlightedText = text.replace(regex, '<span class="highlight">$1</span>');
+                        const wrapper = document.createElement('div');
+                        wrapper.innerHTML = highlightedText;
+                        
+                        while (wrapper.firstChild) {
+                            parent.insertBefore(wrapper.firstChild, textNode);
+                        }
+                        parent.removeChild(textNode);
+                    }
+                });
+            });
+        }
+
+        // Initialize with overview section
+        document.addEventListener('DOMContentLoaded', function() {
+            showSection('overview');
+        });
+    </script>
+</body>
+</html>
